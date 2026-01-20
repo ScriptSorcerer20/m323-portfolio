@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <title>Resultat</title>
+</head>
+
+<body>
+    <h1>Resultat</h1>
+
+    <h2>Outputs sortiert (Lambda Sortierung)</h2>
+    {% if outputs_sortiert|length == 0 %}
+    <p>Keine Daten vorhanden.</p>
+    {% else %}
+    <ul>
+        {% for o in outputs_sortiert %}
+        <li>{{ o.category }}: {{ "%.2f"|format(o.amount) }} ({{ o.date }})</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h2>Immutable Betraege (Tuple)</h2>
+    <p>{{ betraege_tuple }}</p>
+
+    <h2>Summe pro Kategorie (Aggregation)</h2>
+    <ul>
+        {% for kat, s in summe_pro_kategorie.items() %}
+        <li>{{ kat }}: {{ "%.2f"|format(s) }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Summen und funktionale Auswertungen</h2>
+    <ul>
+        <li>Summe nur positive (hoeherwertig + Regel): {{ "%.2f"|format(summe_positive) }}</li>
+        <li>Summe via Funktion-Objekt: {{ "%.2f"|format(summe_via_objekt) }}</li>
+        <li>Summe via reduce: {{ "%.2f"|format(summe_reduce) }}</li>
+        <li>Summe mit Min-Betrag Filter (Closure, min={{ "%.2f"|format(min_betrag) }}): {{ "%.2f"|format(summe_mit_min)
+            }}</li>
+        <li>Summe funktional (filter+map+reduce, faktor={{ "%.2f"|format(faktor) }}): {{ "%.2f"|format(summe_funktional)
+            }}</li>
+    </ul>
+
+    <h2>Refactoring Check (alt vs neu)</h2>
+    {% if refactoring_ok %}
+    <p>OK: Alt und Neu liefern das gleiche Ergebnis.</p>
+    {% else %}
+    <p>Warnung: Alt und Neu liefern unterschiedliche Ergebnisse.</p>
+    {% endif %}
+
+    <p><a href="/">Zurueck</a></p>
+</body>
+
+</html>

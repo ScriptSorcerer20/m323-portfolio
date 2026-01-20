@@ -1,10 +1,10 @@
 import dataclasses
 import datetime
 
-@dataclasses
+@dataclasses.dataclass(frozen=True)
 class Output:
-    id: int
-    amount: int
+    id: int | None
+    amount: float
     category: str
-    date: datetime
+    date: datetime.date
     description: str

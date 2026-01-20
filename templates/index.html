@@ -1,13 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="de">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Portfolio-m323</title>
+    <meta charset="utf-8">
+    <title>Ausgaben-Kalkulierer</title>
 </head>
 
 <body>
-    <h1>Wilkommen</h1>
+    <h1>Ausgaben-Kalkulierer (SQLite)</h1>
+
+    <h2>Neue Ausgabe erfassen</h2>
+    <form method="post" action="/add">
+        <label>Kategorie:</label><br>
+        <input name="category" type="text" placeholder="z.B. Essen"><br><br>
+
+        <label>Betrag:</label><br>
+        <input name="amount" type="text" placeholder="z.B. 12.50"><br><br>
+
+        <label>Datum:</label><br>
+        <input name="date" type="date"><br><br>
+
+        <label>Beschreibung:</label><br>
+        <input name="description" type="text" placeholder="optional"><br><br>
+
+        <button type="submit">Speichern</button>
+    </form>
+
+    <hr>
+
+    <h2>Gespeicherte Ausgaben</h2>
+    {% if outputs|length == 0 %}
+    <p>Noch keine Ausgaben vorhanden.</p>
+    {% else %}
+    <ul>
+        {% for o in outputs %}
+        <li>
+            {{ o.date }} | {{ o.category }} | {{ "%.2f"|format(o.amount) }} | {{ o.description }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <hr>
+
+    <h2>Auswerten</h2>
+    <form method="post" action="/berechnen">
+        <label>Min Betrag (Closure Filter, optional):</label><br>
+        <input name="min_betrag" type="text" placeholder="z.B. 10"><br><br>
+
+        <label>Faktor (map, z.B. 1.05 fuer +5%):</label><br>
+        <input name="faktor" type="text" value="1.0"><br><br>
+
+        <label>Sortierung:</label><br>
+        <select name="sortierung">
+            <option value="asc">aufsteigend</option>
+            <option value="desc">absteigend</option>
+        </select><br><br>
+
+        <button type="submit">Berechnen</button>
+    </form>
 </body>
 
 </html>
