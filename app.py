@@ -10,13 +10,13 @@ dao = OutputDAO("database.db")
 dao.create_table()
 
 # ----------------------------
-# Funktionale Bausteine (aus deinen Kompetenzfeldern)
+# Funktionale Bausteine
 # ----------------------------
 
 def berechne_summe(werte):
     return sum(werte)
 
-def fuege_ausgabe_hinzu(ausgaben_tuple, neue_ausgabe):
+def ausgabe_hinzu(ausgaben_tuple, neue_ausgabe):
     return ausgaben_tuple + (neue_ausgabe,)
 
 def filter_positive_ausgaben(ausgaben):
@@ -55,7 +55,6 @@ def berechne_gesamtbetrag_funktional(betraege, faktor):
     return reduce(lambda a, b: a + b, angepasst, 0)
 
 def berechne_summe_pro_kategorie(outputs):
-    # B4E: Aggregation pro Kategorie
     gefiltert = filter(lambda o: o.amount > 0, outputs)
     transformiert = map(lambda o: (o.category, o.amount), gefiltert)
 
@@ -66,7 +65,6 @@ def berechne_summe_pro_kategorie(outputs):
 
     return reduce(reducer, transformiert, {})
 
-# Refactoring alt/neu (C1E)
 def berechne_gesamtbetrag_alt(ausgaben):
     gesamt = 0
     for wert in ausgaben:
@@ -110,7 +108,7 @@ def outputs_to_amount_list(outputs):
 def amounts_to_immutable_tuple(amounts):
     tup = ()
     for a in amounts:
-        tup = fuege_ausgabe_hinzu(tup, a)
+        tup = ausgabe_hinzu(tup, a)
     return tup
 
 # ----------------------------

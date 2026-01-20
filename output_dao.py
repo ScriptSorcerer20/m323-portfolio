@@ -31,7 +31,6 @@ class OutputDAO:
                 "SELECT id, amount, category, date, description FROM outputs ORDER BY date DESC, id DESC"
             ).fetchall()
 
-        # funktional: map -> Output
         return list(map(self._row_to_output, rows))
 
     def add(self, output: Output):
